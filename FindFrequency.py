@@ -7,7 +7,8 @@ from os import system
 
 global freq_range, increase_const
 freq_range = []
-
+# Work in progress
+"""
 # Max frequency, length range, increase const
 settings = {1: (8000, 20, 0.0025), 2: (2000, 2, 0.001)}
 
@@ -28,6 +29,11 @@ while True:
 for i in range(settings[setting_type][1], settings[setting_type][0], settings[setting_type][1]):
     freq_range.append((i - settings[setting_type][1], settings[setting_type][1]))
 increase_const = settings[setting_type][2]
+"""
+
+for i in range(20, 8020, 20):
+    freq_range.append((i - 20, i))
+increase_const = 0.0025
 
 def brightness(freq, led = 13):
     for i in freq_range:
