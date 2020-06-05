@@ -24,15 +24,11 @@ tracks = {
     15: ('DOS-88 - Race To Mars', 'C:/Users/Oscar/Music/wav/DOS-88 - Race To Mars.wav'), 
     16: ('Animadrop - Dancing in the Rain', 'C:/Users/Oscar/Music/wav/Animadrop - Dancing in the Rain.wav'), 
     17: ('DOS-88 - City Stomper', 'C:/Users/Oscar/Music/wav/DOS-88 - City Stomper.wav'), 
-    18: ('Danger - 1:42', 'C:/Users/Oscar/Music/wav/Danger - 142.wav')
+    18: ('Danger - 1:42', 'C:/Users/Oscar/Music/wav/Danger - 142.wav'),
+    19: ('Unknown Brain - War Zone ft MIME', 'C:/Users/Oscar/Music/wav/Unknown Brain - War Zone ft MIME.wav'),
+    20: ('Layto - Beauty', 'C:/Users/Oscar/Music/wav/Layto - Beauty.wav'),
+    21: ('Kipher - Goons', 'C:/Users/Oscar/Music/wav/Kipher - Goons.wav')
     }
-
-global freq_range, increase_const
-freq_range = []
-
-for i in range(2, 8002, 2):
-    freq_range.append((i - 2, i))
-increase_const = 0.0005
 
 print("Choose a track:")
 for i in tracks:
@@ -48,6 +44,7 @@ while True:
         sleep(2)
         system('cls')
 
+"""
 def set_RGB_color(freq, red = 2, green = 5, blue = 6):
     set_52 = 0.203125
     set_235 = 0.91796875
@@ -84,6 +81,53 @@ def set_RGB_color(freq, red = 2, green = 5, blue = 6):
         red.write(set_235)
         green.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
         blue.write(set_52)
+"""
+        
+def set_RGB_color(freq, red = 2, green = 5, blue = 6):
+    CONV_1_TO_RGB = 0.00390625
+
+    if freq < 40:
+        red.write(1)
+        green.write(0)
+        blue.write(0)
+    elif freq >= 40 and freq <= 77:
+        var = ((freq - 40) * (255 / 37)) * CONV_1_TO_RGB
+        red.write(1)
+        green.write(0)
+        blue.write(var)
+    elif freq > 77 and freq <= 205:
+        var = (255 - ((freq - 78) * 2)) * CONV_1_TO_RGB
+        red.write(var)
+        green.write(0)
+        blue.write(1)
+    elif freq >= 206 and freq <= 238:
+        var = ((freq - 206) * (255 / 32)) * CONV_1_TO_RGB
+        red.write(0)
+        green.write(var)
+        blue.write(1)
+    elif freq >= 239 and freq <= 250:
+        var = ((freq - 239) * (255 / 11)) * CONV_1_TO_RGB
+        red.write(var)
+        green.write(1)
+        blue.write(1)
+    elif freq >= 251 and freq <= 270:
+        red.write(1)
+        green.write(1)
+        blue.write(1)
+    elif freq >= 271 and freq <= 398:
+        var = (255 - ((freq - 271) * 2)) * CONV_1_TO_RGB
+        red.write(var)
+        green.write(1)
+        blue.write(var)
+    elif freq >= 398 and freq <= 653:
+        red.write(0)
+        green.write((255 - (freq - 398)) * CONV_1_TO_RGB)
+        blue.write((freq - 398) * CONV_1_TO_RGB)
+    else:
+        red.write(1)
+        green.write(0)
+        blue.write(0)
+        
 
 """Variables for Arduino"""
 board = pyfirmata.Arduino('COM4')
