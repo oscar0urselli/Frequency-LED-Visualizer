@@ -27,7 +27,8 @@ tracks = {
     18: ('Danger - 1:42', 'C:/Users/Oscar/Music/wav/Danger - 142.wav'),
     19: ('Unknown Brain - War Zone ft MIME', 'C:/Users/Oscar/Music/wav/Unknown Brain - War Zone ft MIME.wav'),
     20: ('Layto - Beauty', 'C:/Users/Oscar/Music/wav/Layto - Beauty.wav'),
-    21: ('Kipher - Goons', 'C:/Users/Oscar/Music/wav/Kipher - Goons.wav')
+    21: ('Kipher - Goons', 'C:/Users/Oscar/Music/wav/Kipher - Goons.wav'),
+    22: ('Neo Fresco - Sublimation Original Mix', 'C:/Users/Oscar/Music/wav/Neo Fresco - Sublimation Original Mix.wav')
     }
 
 print("Choose a track:")
@@ -83,50 +84,50 @@ def set_RGB_color(freq, red = 2, green = 5, blue = 6):
         blue.write(set_52)
 """
         
-def set_RGB_color(freq, red = 2, green = 5, blue = 6):
+def set_RGB_color(freq, red = [], green = [], blue = []):
     CONV_1_TO_RGB = 0.00390625
 
     if freq < 40:
-        red.write(1)
-        green.write(0)
-        blue.write(0)
+        for i in red: i.write(1)
+        for i in green: i.write(0)
+        for i in blue: i.write(0)
     elif freq >= 40 and freq <= 77:
         var = ((freq - 40) * (255 / 37)) * CONV_1_TO_RGB
-        red.write(1)
-        green.write(0)
-        blue.write(var)
+        for i in red: i.write(1)
+        for i in green: i.write(0)
+        for i in blue: i.write(var)
     elif freq > 77 and freq <= 205:
         var = (255 - ((freq - 78) * 2)) * CONV_1_TO_RGB
-        red.write(var)
-        green.write(0)
-        blue.write(1)
+        for i in red: i.write(var)
+        for i in green: i.write(0)
+        for i in blue: i.write(1)
     elif freq >= 206 and freq <= 238:
         var = ((freq - 206) * (255 / 32)) * CONV_1_TO_RGB
-        red.write(0)
-        green.write(var)
-        blue.write(1)
+        for i in red: i.write(0)
+        for i in green: i.write(var)
+        for i in blue: i.write(1)
     elif freq >= 239 and freq <= 250:
         var = ((freq - 239) * (255 / 11)) * CONV_1_TO_RGB
-        red.write(var)
-        green.write(1)
-        blue.write(1)
+        for i in red: i.write(var)
+        for i in green: i.write(1)
+        for i in blue: i.write(1)
     elif freq >= 251 and freq <= 270:
-        red.write(1)
-        green.write(1)
-        blue.write(1)
+        for i in red: i.write(1)
+        for i in green: i.write(1)
+        for i in blue: i.write(1)
     elif freq >= 271 and freq <= 398:
         var = (255 - ((freq - 271) * 2)) * CONV_1_TO_RGB
-        red.write(var)
-        green.write(1)
-        blue.write(var)
+        for i in red: i.write(var)
+        for i in green: i.write(1)
+        for i in blue: i.write(var)
     elif freq >= 398 and freq <= 653:
-        red.write(0)
-        green.write((255 - (freq - 398)) * CONV_1_TO_RGB)
-        blue.write((freq - 398) * CONV_1_TO_RGB)
+        for i in red: i.write(0)
+        for i in green: i.write((255 - (freq - 398)) * CONV_1_TO_RGB)
+        for i in blue: i.write((freq - 398) * CONV_1_TO_RGB)
     else:
-        red.write(1)
-        green.write(0)
-        blue.write(0)
+        for i in red: i.write(1)
+        for i in green: i.write(0)
+        for i in blue: i.write(0)
         
 
 """Variables for Arduino"""
@@ -136,9 +137,13 @@ it = pyfirmata.util.Iterator(board)
 it.start()
 
 # Set digital pin in PWM mode for RGB led
-redLedPin = board.get_pin('d:3:p')
-greenLedPin = board.get_pin('d:5:p')
-blueLedPin = board.get_pin('d:6:p')
+redLedPin1 = board.get_pin('d:3:p')
+greenLedPin1 = board.get_pin('d:5:p')
+blueLedPin1 = board.get_pin('d:6:p')
+
+redLedPin2 = board.get_pin('d:9:p')
+greenLedPin2 = board.get_pin('d:10:p')
+blueLedPin2 = board.get_pin('d:11:p')
 
 
 """Variables for the frequency detection"""
@@ -181,16 +186,20 @@ while len(data) == chunk * swidth:
     print("The frequency is {0} Hz".format(thefreq))
 
     if not np.isnan(thefreq):
-        set_RGB_color(freq = thefreq, red = redLedPin, green = greenLedPin, blue = blueLedPin)
+        set_RGB_color(freq = thefreq, red = [redLedPin1, redLedPin2], green = [greenLedPin1, greenLedPin2], blue = [blueLedPin1, blueLedPin2])
 
     data = wf.readframes(chunk)
 
 if data:
     stream.write(data)
 
-redLedPin.write(0)
-greenLedPin.write(0)
-blueLedPin.write(0)
+redLedPin1.write(0)
+greenLedPin1.write(0)
+blueLedPin1.write(0)
+
+redLedPin2.write(0)
+greenLedPin2.write(0)
+blueLedPin2.write(0)
 
 stream.close()
 p.terminate()
