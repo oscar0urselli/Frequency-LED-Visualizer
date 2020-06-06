@@ -46,42 +46,40 @@ while True:
         system('cls')
 
 """
-def set_RGB_color(freq, red = 2, green = 5, blue = 6):
-    set_52 = 0.203125
-    set_235 = 0.91796875
+def set_RGB_color(freq, red = [], green = [], blue = []):
     CONV_1_TO_RGB = 0.00390625
     CONV_HZ_TO_RGB = 7.28597268
 
     # B+
     if freq <= 1333.333:
-        red.write(set_235)
-        green.write(set_52)
-        blue.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
+        for i in red: i.write(1)
+        for i in green: i.write(0)
+        for i in blue: i.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
     # R-
     elif freq > 1333.333 and freq <= 2666.666:
-        red.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
-        green.write(set_52)
-        blue.write(set_235)
+        for i in red: i.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
+        for i in green: i.write(0)
+        for i in blue: i.write(1)
     # G+
     elif freq > 2666.666 and freq <= 4000:
-        red.write(set_52)
-        green.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
-        blue.write(set_235)
+        for i in red: i.write(0)
+        for i in green: i.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
+        for i in blue: i.write(1)
     # B-
     elif freq > 4000 and freq <= 5333.333:
-        red.write(set_52)
-        green.write(set_235)
-        blue.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
+        for i in red: i.write(0)
+        for i in green: i.write(1)
+        for i in blue: i.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
     # R+
     elif freq > 5333.333 and freq <= 6666.666:
-        red.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
-        green.write(set_235)
-        blue.write(set_52)
+        for i in red: i.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
+        for i in green: i.write(1)
+        for i in blue: i.write(0)
     # G-
     else:
-        red.write(set_235)
-        green.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
-        blue.write(set_52)
+        for i in red: i.write(1)
+        for i in green: i.write((freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB)
+        for i in blue: i.write(0)
 """
         
 def set_RGB_color(freq, red = [], green = [], blue = []):
