@@ -2,6 +2,8 @@ import pyaudio
 import wave
 import numpy as np
 import pyfirmata
+from os import system
+from time import sleep
 
 """Tracks"""
 tracks = {
