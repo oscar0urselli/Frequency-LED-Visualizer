@@ -1,5 +1,4 @@
 # ledSync
 Sync led with music, using Arduino and Python.
 
-For the moment, the best result I had is using one single color led. I added a script for RGB led but actually is not working very well.
-However now single RGB led control is increased and it's possible to use a microphone for the control in real time of the led.
+After some update, now the code is fine, there are some issues yet. However is possible to control more than one led in all the three mode: single color led, RGB led and in real time with RGB leds. I will upload a C++ code which work with Arduino, but using a frequency to volt converter. Actually these scripts in Python use just a microphone attched to a computer connected to an Arduino board with some leds.
