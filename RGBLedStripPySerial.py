@@ -12,36 +12,49 @@ tracks = {
     }
 
 def set_RGB_color(freq):
-    CONV_HZ_TO_RGB = 7.28597268
+    if freq < 0: freq = 0
+    else: freq = int(freq)
 
-    if freq <= 0: var = 0
-    else: var = int(freq / CONV_HZ_TO_RGB)
-
-    if var > 255: var = 255
-
-    if freq <= 1333.333:
-        red = 1
+    if freq < 40:
+        red = 255
         green = 0
-        blue = var
-    elif freq > 1333.333 and freq <= 2666.666:
-        red = var
-        green = 0
-        blue = 1
-    elif freq > 2666.666 and freq <= 4000:
-        red = 0
-        green = var
-        blue = 1
-    elif freq > 4000 and freq <= 5333.333:
-        red = 0
-        green = 1
-        blue = var
-    elif freq > 5333.333 and freq <= 6666.666:
-        red = var
-        green = 1
         blue = 0
+    elif freq >= 40 and freq <= 77:
+        b = int((freq - 40) * (255 / 37))
+        red = 255
+        green = 0
+        blue = b
+    elif freq > 77 and freq <= 205:
+        r = int(255 - ((freq - 78) * 2))
+        red = r
+        green = 0
+        blue = 255
+    elif freq >= 206 and freq <= 238:
+        g = int((freq - 206) * (255 / 32))
+        red = 0
+        green = g
+        blue = 255
+    elif freq <= 239 and freq <= 250:
+        r = int((freq - 239) * (255 / 11))
+        red = r
+        green = 255
+        blue = 255
+    elif freq >= 251 and freq <= 270:
+        red = 255
+        green = 255
+        blue = 255
+    elif freq >= 271 and freq <= 398:
+        rb = int(255 - ((freq - 271) * 2))
+        red = rb
+        green = 255
+        blue = rb
+    elif freq >= 398 and freq <= 653:
+        red = 0
+        green = int(255 - (freq - 398))
+        blue = int(freq - 398)
     else:
-        red = 1
-        green = var
+        red = 255
+        green = 0
         blue = 0
 
     ArduinoSerial.write(pack('>BBB', red, green, blue))
@@ -107,6 +120,9 @@ while len(data) == CHUNK * swidth: #Do this forever
 
     data = wf.readframes(CHUNK)
 
-ArduinoSerial.write(pack('>BBB', 0, 0, 0))
+sleep(0.5)
+for i in range(150):
+    ArduinoSerial.write(pack('>BBB', 0, 0, 0))
+    sleep(0.01)
 stream.close()
 p.terminate()
