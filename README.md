@@ -13,8 +13,11 @@ Things needed:
 - Python 3.6 or newer installed
 
 Install PyFirmata, PyAudio and NumPy with pip.
+
 Upload StandardFirmata on your Arduino board from Arduino IDE.
+
 In the Python script, write in the dictonary under """Tracks""" the name of the song and its directory (remember, the song must be a .wav).
+
 Connect one or more RGB led to the Arduino board and run the Python script.
 
 
