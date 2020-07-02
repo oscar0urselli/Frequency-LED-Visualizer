@@ -1,10 +1,6 @@
 # ledSync
 Sync led with music, using Arduino and Python.
 
-There are some scripts. This is the list that explain all:
-1) RGBLed.py
-Using the firmware Firmata and the module PyFirmata, one or more RGB leds attached to the PWM port of Arduino go in sync with a .wav file.
-
 Things needed:
 - Arduino UNO board (or similiar)
 - RGB led (one or more)
@@ -18,7 +14,11 @@ Upload StandardFirmata on your Arduino board from Arduino IDE.
 
 In the Python script, write in the dictonary under """Tracks""" the name of the song and its directory (remember, the song must be a .wav).
 
-Connect one or more RGB led to the Arduino board and run the Python script.
+Connect one or more RGB led to the Arduino board and run one of these Python scripts:
+
+
+1) RGBLed.py
+Using the firmware Firmata and the module PyFirmata, one or more RGB leds attached to the PWM port of Arduino go in sync with a .wav file.
 
 
 2) SingleLed.py
