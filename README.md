@@ -1,4 +1,4 @@
-# ledSync
+# Frequency LED Visualizer
 Visualize the frequency of the music with a led using: Arduino, Python and [FFT (Fast Fourier transform)](https://en.wikipedia.org/wiki/Fast_Fourier_transform).
 
 ## Descriptions
