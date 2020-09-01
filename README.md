@@ -1,7 +1,17 @@
 # ledSync
-Sync led with music, using Arduino and Python.
+Visualize the frequency of the music with a led using: Arduino, Python and [FFT (Fast Fourier transform)](https://en.wikipedia.org/wiki/Fast_Fourier_transform).
 
-Things needed for every program:
+## Descriptions
+- ### RGBLed.py
+  - Create a realtime visualizer of the frequency of the music reproduced on the computer using a RGB LED.
+- ### SingleLed.py
+  - Same effect of _RGBLed.py_ but with a normal LED with a single color.
+- ### RealTimeRGBLed.py
+  - Visualize with a RGB LED, the frequency of a sound captured by a microphone attached to the computer.
+- ### RGBLedStripPySerial.py
+  - As _RGBLed.py_ reproduce a .wav file and calculate the frequency, then convert the value to RGB and send it to Arduino, where _ControlRGBLedStrip.ino_ will control the strip.
+
+## Things needed for every program:
 - Arduino UNO board (or similiar)
 - A USB cable to connect Arduino with a computer
 - Python 3.6 or newer installed
@@ -42,7 +52,8 @@ Another time, inside _RGBLedStripPySerial.py_ you'll need to do this steps:
   - It's important also to change something inside _ControlRGBLedStrip.ino_:
     - change ```#define LED_PIN 6``` if you want to use another pin (remember to attach the strip to the pin wrote here);
     - ```#define NUM_LEDS 150``` change only with the number written inside _RGBLedStripPySerial.py_ at row **83**.
-- **NOTE**:
+
+**NOTE**:
   - **In order to use _ControlRGBLedStrip.ino_ you need to install the [FastLED](https://github.com/FastLED/FastLED) library**
     
 ## Useful links
