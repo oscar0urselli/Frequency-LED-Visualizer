@@ -1,15 +1,11 @@
-import serial
 import numpy as np
-import pyaudio
-import wave
+import serial
 from struct import pack
 from time import sleep
-from os import system
+import os
+import wave
 
-"""Tracks"""
-tracks = {
-    1: ('Song 1', 'directory\song1.wav')
-    }
+import pyaudio
 
 def set_RGB_color(freq):
     if freq < 0: freq = 0
@@ -59,70 +55,99 @@ def set_RGB_color(freq):
 
     ArduinoSerial.write(pack('>BBB', red, green, blue))
 
-print("Choose a track:")
-for i in tracks: print(str(i) + ")", tracks[i][0])
+def play(directory):
+    # List every .wav file inside the folder
+    audio_files = [f for f in os.listdir(directory) if f.endswith(".wav")]
 
-while True:
-    choosen_track = int(input())
-    if choosen_track in tracks:
-        choosen_track = tracks[choosen_track][1]
-        break
-    else:
-        print("This track doesn't exist!")
-        sleep(2)
-        system('cls')
+    print("Choose a track:")
+    for i in audio_files:
+        print(i + ")", directory + "/" + i)
 
+    while True:
+        choosen_track = int(input())
+        if choosen_track < len(audio_files):
+            choosen_track = directory + "/" + audio_files[choosen_track]
+            return choosen_track
+        else:
+            print("This track doesn't exist!")
+            sleep(2)
+            os.system('cls')
+
+
+"""Folder path"""
+# The full path of the folder containing the .wav files
+path = "" 
+
+"""Strip length"""
+# Number of leds in the strip
+n_leds = 150
 
 """Set serial comunication with Arduino board"""
-ArduinoSerial = serial.Serial('COM4', 9600)
+# Serial port used for the comunication with Arduino.
+# Change if you use a different one
+ArduinoSerial = serial.Serial('COM3', 9600)
 sleep(2)
-
 
 """Variables for the frequency detection"""
 CHUNK = 2048
 
-wf = wave.open(choosen_track, 'rb')
+while True:
+    # Open the .wav file
+    wf = wave.open(play(path), 'rb')
 
-swidth = wf.getsampwidth()
-RATE = wf.getframerate()
+    swidth = wf.getsampwidth()
+    RATE = wf.getframerate()
 
-window = np.blackman(CHUNK)
+    # Use the Blackman window
+    window = np.blackman(CHUNK)
 
-p = pyaudio.PyAudio()
-stream = p.open(
-    format = p.get_format_from_width(wf.getsampwidth()),
-    channels = wf.getnchannels(),
-    rate = RATE,
-    output = True
-)
-
-data = wf.readframes(CHUNK)
-
-while len(data) == CHUNK * swidth: #Do this forever
-    stream.write(data)
-
-    indata = np.array(wave.struct.unpack("%dh" % (len(data) / swidth), data)) * window
-
-    fftData = abs(np.fft.rfft(indata)) ** 2
-
-    which = fftData[1:].argmax() + 1
-
-    if which != len(fftData) - 1:
-        y0, y1, y2 = np.log(fftData[which - 1: which + 2])
-        x1 = (y2 - y0) * .5 / (2 * y1 - y2 - y0)
-
-        thefreq = (which + x1) * RATE / CHUNK
-    else: thefreq = which * RATE / CHUNK
-
-    print("The frequency is {0} Hz".format(thefreq))
-
-    if not np.isnan(thefreq): set_RGB_color(freq = thefreq)
+    p = pyaudio.PyAudio()
+    stream = p.open(
+        format = p.get_format_from_width(wf.getsampwidth()),
+        channels = wf.getnchannels(),
+        rate = RATE,
+        output = True
+    )
 
     data = wf.readframes(CHUNK)
 
-sleep(0.5)
-for i in range(150):
-    ArduinoSerial.write(pack('>BBB', 0, 0, 0))
-    sleep(0.01)
+    # Find the frequency of each chunk
+    while len(data) == CHUNK * swidth:
+        # Write data out to the audio stream
+        stream.write(data)
+
+        # Unpack the data and multiplicate it by the Hamming window
+        indata = np.array(wave.struct.unpack("%dh" % (len(data) / swidth), data)) * window
+
+        # Square each value of the fft
+        fftData = abs(np.fft.rfft(indata)) ** 2
+
+        # Find the maximum value
+        which = fftData[1:].argmax() + 1
+
+        # Use the quadratic interpolation around the max
+        if which != len(fftData) - 1:
+            y0, y1, y2 = np.log(fftData[which - 1: which + 2])
+            x1 = (y2 - y0) * .5 / (2 * y1 - y2 - y0)
+
+            thefreq = (which + x1) * RATE / CHUNK
+        else:
+            thefreq = which * RATE / CHUNK
+
+        print("The frequency is {0} Hz".format(thefreq))
+
+        # Check if the frequency is not detected
+        if not np.isnan(thefreq):
+            set_RGB_color(freq = thefreq)
+
+        # Read more data
+        data = wf.readframes(CHUNK)
+
+    sleep(0.2)
+    # Set to 0 the RGB value of each led on the strip
+    for i in range(n_leds):
+        ArduinoSerial.write(pack('>BBB', 0, 0, 0))
+        sleep(0.05)
+
 stream.close()
 p.terminate()
