@@ -22,7 +22,7 @@ NOTE:
     - at row **71** write inside ```path = ""``` the full path of the folder containing the .wav files;
     - instead at the row **76**, you'll find ```board = pyfirmata.Arduino('COM4')``` change the _COM4_ to somthing else if you use a different serial port;
     - finally at **83**, fill the three lists passed as parameters of the function with the PWM pins you want to use.
-  Don't forget to upload StandardFirmata on the Arduino board.
+  - Don't forget to upload StandardFirmata on the Arduino board.
 
 
 - ### SingleLed.py:
@@ -36,9 +36,9 @@ NOTE:
 - ### RGBLedStripPySerial.py and ControlRGBLedStrip.ino
   - With these two programs you can control a RGB led strip while you are playing music like with _RGBLed.py_. But instead of having loaded StandardFirmata in your Arduino board, **you need to use ControlRGBLedStrip.ino**.
 Another time, inside _RGBLedStripPySerial.py_ you'll need to do this steps:
-- at row **79** write inside ```path = ""``` the full path of the folder containing the .wav files;
-- at **83** modify ```n_leds = 150``` with the number of leds that your strip has;
-- in ```board = pyfirmata.Arduino('COM4', 9600)``` change **ONLY** _COM4_ if necessary.
-It's important also to change something inside _ControlRGBLedStrip.ino_:
-- change ```#define LED_PIN 6``` if you want to use another pin (remember to attach the strip to the pin wrote here);
-- ```#define NUM_LEDS 150``` change only with the number written inside _RGBLedStripPySerial.py_ at row **83**.
+    - at row **79** write inside ```path = ""``` the full path of the folder containing the .wav files;
+    - at **83** modify ```n_leds = 150``` with the number of leds that your strip has;
+    - in ```board = pyfirmata.Arduino('COM4', 9600)``` change **ONLY** _COM4_ if necessary.
+  - It's important also to change something inside _ControlRGBLedStrip.ino_:
+    - change ```#define LED_PIN 6``` if you want to use another pin (remember to attach the strip to the pin wrote here);
+    - ```#define NUM_LEDS 150``` change only with the number written inside _RGBLedStripPySerial.py_ at row **83**.
