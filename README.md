@@ -7,13 +7,13 @@ Things needed for every program:
 - Python 3.6 or newer installed
 - A computer, possibly not an IBM 701 :)
 
-Install [PyFirmata](https://pypi.org/project/pyFirmata/), [PyAudio](https://pypi.org/project/PyAudio/) and [NumPy](https://pypi.org/project/numpy/) with pip if not already installed.
+Install [PyFirmata](https://pypi.org/project/pyFirmata/), [PyAudio](https://pypi.org/project/PyAudio/), [PySerial](https://pypi.org/project/pyserial/) and [NumPy](https://pypi.org/project/numpy/) with pip if not already installed.
 
 ## How to upload StandardFirmata on Arduino.
 In order to upload StandardFirmata you need to install the [Arduino IDE](https://www.arduino.cc/en/main/software) first. Then inside the editor go: _File -> Examples -> Firmata -> StandardFirmata_. And once you selected it, click the button to load on the Arduino board.
 
-NOTE:
-> **If you don't find Firmata, means you have an old version of the Arduino IDE and you should up date it.**
+**NOTE**:
+- **If you don't find Firmata, means you have an old version of the Arduino IDE and you should up date it.**
 
 
 ## Setup the programs
@@ -25,7 +25,7 @@ NOTE:
   - Don't forget to upload StandardFirmata on the Arduino board.
 
 
-- ### SingleLed.py:
+- ### SingleLed.py
   - Same thing with _RGBLed.py_, but with a normal led with just a color.
 
 
@@ -42,3 +42,14 @@ Another time, inside _RGBLedStripPySerial.py_ you'll need to do this steps:
   - It's important also to change something inside _ControlRGBLedStrip.ino_:
     - change ```#define LED_PIN 6``` if you want to use another pin (remember to attach the strip to the pin wrote here);
     - ```#define NUM_LEDS 150``` change only with the number written inside _RGBLedStripPySerial.py_ at row **83**.
+- **NOTE**:
+  - **In order to use _ControlRGBLedStrip.ino_ you need to install the [FastLED](https://github.com/FastLED/FastLED) library**
+    
+## Useful links
+For the creation of these programs I followed a lot of articles, wikis, videos and forums.
+This is the list of the source that helped me:
+- [Python frequency detection](https://stackoverflow.com/a/2649540/13340183)
+- [How to send an int from Python to an Arduino in order to use it as an argument for the neopixel function setPixelcolor()?](https://stackoverflow.com/a/56321187/13340183)
+- [HOW TO USE WS2812B NEOPIXELS WITH FASTLED ON ARDUINO](https://youtu.be/YgII4UYW5hU) (video)
+- [LED-Music-Visualizer](https://github.com/DevonCrawford/LED-Music-Visualizer)
+- [Arduino With Python: How to Get Started](https://realpython.com/arduino-python/)
