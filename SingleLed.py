@@ -1,11 +1,12 @@
-import pyaudio
-import wave
 import numpy as np
-import pyfirmata
-import os
 from time import sleep
+import os
+import wave
 
-def brightness(freq, led = []):
+import pyaudio
+import pyfirmata
+
+def brightness(freq, leds = []):
     """Constants"""
     CONV_1_TO_RGB = 0.00390625
     CONV_HZ_TO_RGB = 7.28597268 
@@ -15,8 +16,14 @@ def brightness(freq, led = []):
     else:
         var = (freq / CONV_HZ_TO_RGB) * CONV_1_TO_RGB
         
-    for i in led:
+    for i in leds:
         i.write(var)
+
+def set_pins(pin = []):
+    pin_set = []
+    for i in pin: pin_set.append(board.get_pin('d:' + str(i) + ":p"))
+
+    return pin_set
 
 def play(directory):
     # List every .wav file inside the folder
@@ -49,8 +56,9 @@ board = pyfirmata.Arduino('COM4')
 it = pyfirmata.util.Iterator(board)
 it.start()
 
-# Set digital pin 3 in PWM mode
-led_pin1 = board.get_pin('d:3:p')
+"""List of pin to set"""
+# Set digital pin in PWM mode for the led
+pin_ls = set_pins([3])
 
 
 """Variables for the frequency detection"""
@@ -101,13 +109,13 @@ while True:
         print("The frequency is {0} Hz".format(thefreq))
     
         if not np.isnan(thefreq):
-            brightness(freq = thefreq, led = [led_pin1])
+            brightness(freq = thefreq, leds = pin_ls)
 
         # Read more data
         data = wf.readframes(CHUNK)
 
-    # Set to 0 the led value
-    led_pin1.write(0)
+    # Set to 0 the leds value
+    for p in pin_ls: p.write(0)
     
 stream.close()
 p.terminate()
