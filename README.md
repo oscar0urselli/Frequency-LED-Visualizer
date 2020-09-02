@@ -28,7 +28,7 @@ In order to upload StandardFirmata you need to install the [Arduino IDE](https:/
 
 ## Setup the programs
 - ### RGBLed.py
-  - Connect one or more RGB leds to the [PWN](https://www.arduino.cc/en/tutorial/PWM) ports of Arduino (one port for one color), then in _RGBLed.py_:
+  - Connect one or more RGB leds to the [PWM](https://www.arduino.cc/en/tutorial/PWM) ports of Arduino (one port for one color), then in _RGBLed.py_:
     - at row **71** write inside ```path = ""``` the full path of the folder containing the .wav files;
     - instead at the row **76**, you'll find ```board = pyfirmata.Arduino('COM4')``` change the _COM4_ to somthing else if you use a different serial port;
     - finally at **83**, fill the three lists passed as parameters of the function with the PWM pins you want to use.
