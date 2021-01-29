@@ -58,7 +58,7 @@ Another time, inside _RGBLedStripPySerial.py_ you'll need to do this steps:
     
 ## Useful links
 For the creation of these programs I followed a lot of articles, wikis, videos and forums.
-This is the list of the source that helped me:
+This is the list of the sources that helped me:
 - [Python frequency detection](https://stackoverflow.com/a/2649540/13340183)
 - [How to send an int from Python to an Arduino in order to use it as an argument for the neopixel function setPixelcolor()?](https://stackoverflow.com/a/56321187/13340183)
 - [HOW TO USE WS2812B NEOPIXELS WITH FASTLED ON ARDUINO](https://youtu.be/YgII4UYW5hU) (video)
