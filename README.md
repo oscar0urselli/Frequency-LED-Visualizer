@@ -23,7 +23,7 @@ Install [PyFirmata](https://pypi.org/project/pyFirmata/), [PyAudio](https://pypi
 In order to upload StandardFirmata you need to install the [Arduino IDE](https://www.arduino.cc/en/main/software) first. Then inside the editor go: _File -> Examples -> Firmata -> StandardFirmata_. And once you selected it, click the button to load on the Arduino board.
 
 **NOTE**:
-- **If you don't find Firmata, means you have an old version of the Arduino IDE and you should up date it.**
+- **If you don't find Firmata, this means you have an old version of the Arduino IDE and you should update it.**
 
 
 ## Setup the programs
